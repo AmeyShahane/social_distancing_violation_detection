@@ -114,11 +114,11 @@ while True:
 				
 		if len(violate) > 15:
 			image_string = cv2.imencode('.jpg', frame)[1].tostring()
-			s3_client.put_object(Bucket="sns-bucket", Key = str(cur_frame)+".jpeg", Body=image_string)
+			s3_client.put_object(Bucket="sns-src-bucket", Key = str(cur_frame)+".jpeg", Body=image_string)
 
 		frame = cv2.resize(frame, (420,360), interpolation = cv2.INTER_AREA)
 		frame_string = cv2.imencode('.jpg', frame)[1].tostring()
-		s3_client.put_object(Bucket="amplify-bucket", Key = "output.jpeg", Body=frame_string)
+		s3_client.put_object(Bucket="amplify-src-bucket", Key = "output.jpeg", Body=frame_string)
 		# time.sleep(5) 
 		# frame = cv2.resize(frame, (1080,720), interpolation = cv2.INTER_AREA)
 		# cv2.imshow('labelled.jpg',frame)
