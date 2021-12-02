@@ -1,6 +1,6 @@
 locals{
 # instead of referring to same value twice, it is better to declare it as a local variable. Access local variables with syntax -> local.variableName
-  lambda_zip_location = "outputs/sns-lambda.zip"
+  lambda_zip_location = "sns-lambda.zip"
   emails = ["marathechirayu@gmail.com"]
 }
 
