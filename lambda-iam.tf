@@ -133,7 +133,7 @@ variable "repo_branch" {
 
 variable "access_token" {
   type        = string
-  default     = "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"
+  default     = "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"
   description = "Access token used to access the repo"
 }
 
