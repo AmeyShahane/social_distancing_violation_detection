@@ -28,18 +28,18 @@ MIN_DISTANCE = 100
 
 #Get video from S3
 s3_client = boto3.client('s3')
-bucket = 'amplify-bucket'      
-key = 'pedestrians.mp4' 
-url = s3_client.generate_presigned_url('get_object', 
-                                       Params = {'Bucket': bucket, 'Key': key}, 
-                                       ExpiresIn = 600) #this url will be available for 600 seconds  
-capture = cv2.VideoCapture(url)
+# bucket = 'amplify-bucket'      
+# key = 'pedestrians.mp4' 
+# url = s3_client.generate_presigned_url('get_object', 
+#                                        Params = {'Bucket': bucket, 'Key': key}, 
+#                                        ExpiresIn = 600) #this url will be available for 600 seconds  
+# capture = cv2.VideoCapture(url)
        
 
 
 
 # #local video
-# capture = cv2.VideoCapture("pedestrians.mp4")
+capture = cv2.VideoCapture("pedestrians.mp4")
 
 # Create a Rekognition client
 client=boto3.client('rekognition')
