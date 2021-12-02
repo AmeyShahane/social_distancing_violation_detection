@@ -65,7 +65,7 @@ resource "aws_s3_bucket_notification" "bucket_terraform_notification" {
 resource "aws_s3_bucket" "sns-bucket" {
    bucket = "sns-src-bucket"
    force_destroy = true
-   acl    = "public"
+   acl    = "public-read"
    tags = {
      Name = "Source Bucket For SNS"
    }
@@ -75,7 +75,7 @@ resource "aws_s3_bucket" "sns-bucket" {
 resource "aws_s3_bucket" "amplify-bucket" {
    bucket = "amplify-src-bucket"
    force_destroy = true
-   acl    = "public"
+   acl    = "public-read"
    tags = {
      Name = "Source Bucket For Amplify"
    }
