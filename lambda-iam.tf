@@ -16,7 +16,7 @@ provider "aws" {
 
 resource "aws_iam_role" "lambda_role" {
   name = "lambda_role"
-  assume_role_policy = "${file("iam/lambda-assume-policy.json")}"
+  assume_role_policy = "${file("lambda-assume-policy.json")}"
 }
 
 variable "topic_arn" {
@@ -28,7 +28,7 @@ variable "topic_arn" {
 resource "aws_iam_policy" "lambda_policy" {
   name        = "lambda_policy"
   description = "A lambda policy"
-  policy ="${file("iam/lambda-policy.json")}"
+  policy ="${file("lambda-policy.json")}"
 }
 
 resource "aws_iam_role_policy_attachment" "test-attach" {
