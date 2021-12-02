@@ -28,7 +28,7 @@ MIN_DISTANCE = 100
 
 #Get video from S3
 s3_client = boto3.client('s3')
-bucket = 'video-input-bucket2'      
+bucket = 'amplify-bucket'      
 key = 'pedestrians.mp4' 
 url = s3_client.generate_presigned_url('get_object', 
                                        Params = {'Bucket': bucket, 'Key': key}, 
@@ -114,17 +114,17 @@ while True:
 				
 		if len(violate) > 15:
 			image_string = cv2.imencode('.jpg', frame)[1].tostring()
-			s3_client.put_object(Bucket="violations-bucket", Key = str(cur_frame)+".jpeg", Body=image_string)
+			s3_client.put_object(Bucket="sns-bucket", Key = str(cur_frame)+".jpeg", Body=image_string)
 
+		frame = cv2.resize(frame, (420,360), interpolation = cv2.INTER_AREA)
 		frame_string = cv2.imencode('.jpg', frame)[1].tostring()
-		s3_client.put_object(Bucket="video-input-bucket2", Key = "output.jpeg", Body=frame_string)
+		s3_client.put_object(Bucket="amplify-bucket", Key = "output.jpeg", Body=frame_string)
 		# time.sleep(5) 
 		# frame = cv2.resize(frame, (1080,720), interpolation = cv2.INTER_AREA)
 		# cv2.imshow('labelled.jpg',frame)
 		# if cv2.waitKey(1) & 0xFF == ord('q'):
 			# break
 
-			
-
+		
 	cur_frame += 1
 # cv2.destroyAllWindows()
