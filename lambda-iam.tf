@@ -103,15 +103,15 @@ resource "aws_sns_topic_subscription" "crowd_email_subscription" {
 }
 
 # Main ec2 server running script
-resource "aws_instance" "ec2_server" {
-  ami           = "ami-04ad2567c9e3d7893"
-  instance_type = "t2.micro"
-  key_name = "swen-iam-us-east-1"
-  tags = {
-    Terraform = "true"
-    Name = "Python Script Server"
-  }
-}
+#resource "aws_instance" "ec2_server" {
+#  ami           = "ami-04ad2567c9e3d7893"
+#  instance_type = "t2.micro"
+#  key_name = "swen-iam-us-east-1"
+#  tags = {
+#    Terraform = "true"
+#    Name = "Python Script Server"
+#  }
+#}
 
 variable "region" {
   type        = string
