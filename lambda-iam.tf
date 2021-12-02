@@ -65,7 +65,7 @@ resource "aws_s3_bucket_notification" "bucket_terraform_notification" {
 resource "aws_s3_bucket" "sns-bucket" {
    bucket = "sns-src-bucket"
    force_destroy = true
-   acl    = "private"
+   acl    = "public"
    tags = {
      Name = "Source Bucket For SNS"
    }
@@ -75,10 +75,51 @@ resource "aws_s3_bucket" "sns-bucket" {
 resource "aws_s3_bucket" "amplify-bucket" {
    bucket = "amplify-src-bucket"
    force_destroy = true
-   acl    = "private"
+   acl    = "public"
    tags = {
      Name = "Source Bucket For Amplify"
    }
+}
+
+resource "aws_s3_bucket_policy" "sns-bucket_policy" {
+  bucket = "${aws_s3_bucket.sns-bucket.id}"
+  policy = <<EOF
+{
+    "Version": "2008-10-17",
+    "Id": "Policy1380877762691",
+    "Statement": [
+        {
+            "Sid": "Stmt1380877761162",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::sns-bucket/*"
+        }
+    ]
+}
+EOF
+}
+resource "aws_s3_bucket_policy" "amplify-bucket_policy" {
+  bucket = "${aws_s3_bucket.sns-bucket.id}"
+  policy = <<EOF
+{
+    "Version": "2008-10-17",
+    "Id": "Policy1380877762691",
+    "Statement": [
+        {
+            "Sid": "Stmt1380877761162",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::amplify-bucket/*"
+        }
+    ]
+}
+EOF
 }
 
 resource "aws_lambda_function_event_invoke_config" "crowd_lambda" {
