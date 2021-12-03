@@ -81,46 +81,50 @@ resource "aws_s3_bucket" "amplify-bucket" {
    }
 }
 
-# resource "aws_s3_bucket_policy" "sns-bucket_policy" {
-#   bucket = "${aws_s3_bucket.sns-bucket.id}"
-#   policy = <<EOF
-# {
-#     "Version": "2008-10-17",
-#     "Id": "Policy1380877762691",
-#     "Statement": [
-#         {
-#             "Sid": "Stmt1380877761162",
-#             "Effect": "Allow",
-#             "Principal": {
-#                 "AWS": "*"
-#             },
-#             "Action": "s3:GetObject",
-#             "Resource": "arn:aws:s3:::sns-bucket/*"
-#         }
-#     ]
-# }
-# EOF
-# }
-# resource "aws_s3_bucket_policy" "amplify-bucket_policy" {
-#   bucket = "${aws_s3_bucket.sns-bucket.id}"
-#   policy = <<EOF
-# {
-#     "Version": "2008-10-17",
-#     "Id": "Policy1380877762691",
-#     "Statement": [
-#         {
-#             "Sid": "Stmt1380877761162",
-#             "Effect": "Allow",
-#             "Principal": {
-#                 "AWS": "*"
-#             },
-#             "Action": "s3:GetObject",
-#             "Resource": "arn:aws:s3:::amplify-bucket/*"
-#         }
-#     ]
-# }
-# EOF
-# }
+resource "aws_s3_bucket_policy" "sns-bucket" {
+  bucket = aws_s3_bucket.sns-bucket.id
+
+  # Terraform's "jsonencode" function converts a
+  # Terraform expression's result to valid JSON syntax.
+  policy = jsonencode({
+    "Version": "2008-10-17",
+    "Id": "Policy1380877762691",
+    "Statement": [
+        {
+            "Sid": "Stmt1380877761162",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::sns-src-bucket/*"
+        }
+    ]
+})
+}
+
+
+resource "aws_s3_bucket_policy" "amplify-bucket" {
+  bucket = aws_s3_bucket.amplify-bucket.id
+
+  # Terraform's "jsonencode" function converts a
+  # Terraform expression's result to valid JSON syntax.
+  policy = jsonencode({
+    "Version": "2008-10-17",
+    "Id": "Policy1380877762691",
+    "Statement": [
+        {
+            "Sid": "Stmt1380877761162",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::amplify-src-bucket/*"
+        }
+    ]
+})
+}
 
 resource "aws_lambda_function_event_invoke_config" "crowd_lambda" {
   function_name = aws_lambda_function.crowd_lambda.function_name
